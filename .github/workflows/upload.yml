@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/s3-upload-action@master
+      - uses: actions/s3-upload-action@v1
         with:
           aws-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY}}
@@ -17,7 +17,7 @@ jobs:
   invalidate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/invalidate-cloudfront-action@v2
+      - uses: actions/invalidate-cloudfront-action@v1
         with: 
           aws-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access_key: ${{ secrets.SECRET_ACCESS_KEY}}
