@@ -1,1 +1,25 @@
+name: Upload to S3 and Invalidate CloudFront Distribution
+on:
+  push:
+    branches: [ main ]
 
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/s3-upload-action@master
+        with:
+          aws-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY}}
+          aws-bucket: ${{ secrets.BUCKET }}
+          
+  invalidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/invalidate-cloudfront-action@v2
+        with: 
+          aws-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access_key: ${{ secrets.SECRET_ACCESS_KEY}}
+          aws-region: us-east-1
+          distribution: ${{ secrets.DISTRIBUTION }}
