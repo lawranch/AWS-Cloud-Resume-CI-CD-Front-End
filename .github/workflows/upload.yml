@@ -4,22 +4,13 @@ on:
     branches: [ main ]
 
 jobs:
-  upload:
+  upload-website-to-s3:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: shallwefootball/s3-upload-action@master
+      - uses: actions/checkout@v2
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY}}
-          aws-bucket: ${{ secrets.BUCKET }}
-          
-  invalidate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: chetan/invalidate-cloudfront-action@v2
-        with: 
-          aws-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access_key: ${{ secrets.SECRET_ACCESS_KEY}}
+          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-          distribution: ${{ secrets.DISTRIBUTION }}
+      - run: aws s3 sync ./website s3://profile.cloudofthings.net
