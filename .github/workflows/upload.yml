@@ -13,4 +13,4 @@ jobs:
           aws-access-key-id: ${{ secrets.ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - run: aws s3 sync ./* s3://lawrancehuynh.com
+      - run: aws s3 sync ./ s3://lawrancehuynh.com
